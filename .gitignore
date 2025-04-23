@@ -1,0 +1,10 @@
+/*
+
+!.gitignore
+!Source/
+!Source/**
+
+!*.uproject
+
+!Config/
+!Config/**
