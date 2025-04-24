@@ -5,8 +5,6 @@
 // Included
 #include "Components/Border.h"
 #include "Components/CanvasPanel.h"
-#include "Components/CanvasPanelSlot.h"
-#include "InventoryDataStructs.h"
 
 // Engine
 #include "CoreMinimal.h"
@@ -41,13 +39,9 @@ protected:
 
 	float TileSize;
 
-	TArray<float> StartX;
-	TArray<float> StartY;
-	TArray<float> EndX;
-	TArray<float> EndY;
-
-	FLines* LineStructData;
-
+	TArray<FVector4> GridLinesX;
+	TArray<FVector4> GridLinesY;
+	
 	// Functions
 
 	virtual void NativeConstruct() override;

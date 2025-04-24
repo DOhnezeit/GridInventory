@@ -1,6 +1,6 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-#include "InventoryComponent.h"
+
 #include "GridInventoryCharacter.h"
 #include "Engine/LocalPlayer.h"
 #include "Camera/CameraComponent.h"
@@ -12,7 +12,8 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "Kismet/GameplayStatics.h"
-#include "BLueprint/UserWidget.h"
+#include "Blueprint/UserWidget.h"
+#include "InventoryComponent.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 

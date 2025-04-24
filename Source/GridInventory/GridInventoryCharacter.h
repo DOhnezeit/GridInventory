@@ -65,9 +65,6 @@ protected:
 	UPROPERTY()
 	UUserWidget* InventoryWidget;
 
-	UPROPERTY(EditAnywhere)
-	UInventoryComponent* InventoryComponent;
-
 	UPROPERTY()
 	APlayerController* PlayerController;
 
@@ -84,6 +81,10 @@ protected:
 	void ToggleInventory();
 
 	virtual void BeginPlay() override;
+
+public:
 	
+	UPROPERTY(EditAnywhere)
+	UInventoryComponent* InventoryComponent;
 };
 
