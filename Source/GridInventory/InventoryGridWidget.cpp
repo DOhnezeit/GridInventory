@@ -25,7 +25,7 @@ void UInventoryGridWidget::NativeConstruct()
 	float NewWidth = Columns * TileSize;
 	float NewHeight = Rows * TileSize;
 
-	// Store grid lines directly in optimized arrays
+	// Store grid lines directly in optimized arrays, sets the size of the arrays to the number of columns/rows + 1 (+1 for the boundary line)
 	GridLinesX.Empty(Columns + 1);
 	GridLinesY.Empty(Rows + 1);
 

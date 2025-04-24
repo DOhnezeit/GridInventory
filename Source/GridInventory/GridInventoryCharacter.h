@@ -49,6 +49,8 @@ class AGridInventoryCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* InventoryAction;
 
+	
+
 public:
 	AGridInventoryCharacter();
 
