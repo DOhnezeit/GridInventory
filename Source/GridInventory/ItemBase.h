@@ -7,7 +7,10 @@
 #include "ItemBase.generated.h"
 
 class USphereComponent;
+class UItemInstance;
 class UItemBaseDataAsset;
+
+
 
 UCLASS()
 class GRIDINVENTORY_API AItemBase : public AActor
@@ -18,20 +21,33 @@ public:
 	AItemBase();
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* StaticMesh;
 
 	UPROPERTY(VisibleAnywhere)
+	USkeletalMeshComponent* SkeletalMesh;
+
+	UPROPERTY(EditAnywhere)
 	USphereComponent* SphereComponent;
 
-	UFUNCTION(BlueprintCallable, Category = "Item")
-	UItemBaseDataAsset* GetItemDataAsset() const;
+	UPROPERTY(VisibleAnywhere)
+	bool IsInitialized;
 
-	void InitializeItem(UItemBaseDataAsset* NewItemDataAsset);
+	UFUNCTION(BlueprintCallable, Category = "Item Data")
+	UItemInstance* GetItemInstance() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Item Data")
+	UItemBaseDataAsset* GetBaseDataAsset() const;
+	
+	void InitializeItem(UItemInstance* NewItemInstance);
+
 	
 protected:
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Item Data")
+	UItemInstance* ItemInstance;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Item Data")
 	UItemBaseDataAsset* ItemDataAsset;
 };

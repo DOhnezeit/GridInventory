@@ -4,21 +4,19 @@
 #include "ItemBase.h"
 
 #include "ItemBaseDataAsset.h"
+#include "ItemInstance.h"
 #include "Components/SphereComponent.h"
 
 AItemBase::AItemBase()
 {
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
-	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
+	IsInitialized = false;
+	
 	SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
+	SphereComponent->SetupAttachment(RootComponent);
 
-	StaticMesh->SetupAttachment(RootComponent);
-	SphereComponent->SetupAttachment(StaticMesh);
-
-	StaticMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-
-	ItemDataAsset = nullptr;
+	ItemInstance = nullptr;
 }
 
 void AItemBase::BeginPlay()
@@ -33,26 +31,83 @@ void AItemBase::Tick(float DeltaTime)
 
 }
 
-UItemBaseDataAsset* AItemBase::GetItemDataAsset() const
+UItemInstance* AItemBase::GetItemInstance() const
 {
-	if (ItemDataAsset != nullptr)
+	if (ItemInstance != nullptr)
 	{
-		return ItemDataAsset;
+		return ItemInstance;
 	}
 	UE_LOG(LogTemp, Error, TEXT("ItemDataAsset is nullptr"));
 	return nullptr;
 }
 
-void AItemBase::InitializeItem(UItemBaseDataAsset* NewItemDataAsset)
+UItemBaseDataAsset* AItemBase::GetBaseDataAsset() const
 {
-	if (NewItemDataAsset != nullptr)
+	if (ItemDataAsset)
 	{
-		ItemDataAsset = NewItemDataAsset;
-		if (ItemDataAsset->ItemMesh != nullptr)
+		return ItemDataAsset;
+	}
+	
+	if (!ItemInstance)
+	{
+		UE_LOG(LogTemp, Error, TEXT("ItemInstance is nullptr"));
+		return nullptr;
+	}
+
+	UItemBaseDataAsset* DataAsset = ItemInstance->GetDataAsset();
+
+	
+	if (!DataAsset)
+	{
+		UE_LOG(LogTemp, Error, TEXT("ItemDataAsset is nullptr"));
+		return nullptr;
+	}
+	return DataAsset;
+}
+
+void AItemBase::InitializeItem(UItemInstance* NewItemInstance)
+{
+	if (NewItemInstance != nullptr)
+	{
+		ItemInstance = NewItemInstance;
+		if (ItemInstance->GetDataAsset())
 		{
+			ItemDataAsset = ItemInstance->GetDataAsset();
+		}
+		
+		else
+		{
+			UE_LOG(LogTemp, Error, TEXT("Failed Item initialization: ItemDataAsset is nullptr"));
+		}
+		
+		if (ItemDataAsset->ItemMesh)
+		{
+			StaticMesh = NewObject<UStaticMeshComponent>(this);
+			StaticMesh->SetupAttachment(RootComponent);
+			StaticMesh->RegisterComponent();
 			StaticMesh->SetStaticMesh(ItemDataAsset->ItemMesh);
+			StaticMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+			
+			IsInitialized = true;
+		}
+
+		else if (ItemDataAsset->ItemSkeletalMesh)
+		{
+			SkeletalMesh = NewObject<USkeletalMeshComponent>(this);
+			SkeletalMesh->SetupAttachment(RootComponent);
+			SkeletalMesh->RegisterComponent();
+			SkeletalMesh->SetSkeletalMesh(ItemDataAsset->ItemSkeletalMesh);
+			SkeletalMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+			IsInitialized = true;
+		}
+		
+		else
+		{
+			UE_LOG(LogTemp, Error, TEXT("ItemDataAsset does not have an ItemMesh"));
 		}
 	}
+	
 	else
 	{
 		UE_LOG(LogTemp, Error, TEXT("ItemDataAsset is nullptr"));

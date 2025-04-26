@@ -16,32 +16,35 @@ class GRIDINVENTORY_API UItemBaseDataAsset : public UPrimaryDataAsset
 public:
 	UItemBaseDataAsset();
 	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item | Inventory Info")
 	FName ItemID;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item | Inventory Info")
 	FName ItemName;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item | Inventory Info")
 	FName ItemDescription;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item | Inventory Info")
 	UTexture2D* ItemIcon;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item | Inventory Info")
 	float ItemWeight;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item | Inventory Info")
 	float ItemValue;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item | Inventory Info")
 	FIntPoint ItemGridSize;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item | Inventory Info")
 	bool CanRotate;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item | Mesh")
 	UStaticMesh* ItemMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item | Mesh")
+	USkeletalMesh* ItemSkeletalMesh;
 
 #if WITH_EDITOR
 	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
