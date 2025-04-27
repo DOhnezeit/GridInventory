@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ItemData.h"
 
 #include "ItemInstance.generated.h"
 
@@ -15,15 +16,9 @@ class GRIDINVENTORY_API UItemInstance : public UObject
 
 public:
 	UFUNCTION()
-	UItemBaseDataAsset* GetDataAsset() const;
+	const FItemData& GetItemData() const;
 
 protected:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item Instance")
-	UItemBaseDataAsset* ItemDataAsset;
-
-	// Placeholder for later Modifier implementations, could loop through modifiers with a GetModifiedStat() function + enum
-	// UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Item Instance")
-	// TArray<FItemModifier> Modifiers;
-
-	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Item Data")
+	FItemData ItemData;
 };

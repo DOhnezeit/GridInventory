@@ -3,15 +3,7 @@
 
 #include "ItemInstance.h"
 
-#include "ItemBaseDataAsset.h"
-
-UItemBaseDataAsset* UItemInstance::GetDataAsset() const
+const FItemData& UItemInstance::GetItemData() const
 {
-	if (ItemDataAsset)
-	{
-		return ItemDataAsset;
-	}
-
-	UE_LOG(LogTemp, Warning, TEXT("ItemDataAsset is nullptr"));
-	return nullptr;
+	return ItemData;
 }
